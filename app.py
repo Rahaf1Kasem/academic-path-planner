@@ -10,15 +10,7 @@ st.set_page_config(
     layout="wide"
 )
 
-# Custom CSS to hide GitHub icon and link
-hide_github_style = """
-<style>
-a[href*="github.com"] {
-    display: none !important;
-}
-}
-</style>
-"""
+
 st.markdown(hide_github_style, unsafe_allow_html=True)
 
 st.title("🎓 Smart Academic Pathway Planner")
