@@ -10,7 +10,21 @@ st.set_page_config(
     layout="wide"
 )
 
-
+st.markdown("""
+<style>
+[data-testid="collapsedControl"] {
+    display: block !important;
+    visibility: visible !important;
+    position: fixed !important;
+    top: 15px !important;
+    left: 15px !important;
+    z-index: 999999 !important;
+    background-color: #f0f2f6 !important;
+    border-radius: 50% !important;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2) !important;
+}
+</style>
+""", unsafe_allow_html=True)
 
 st.title("🎓 Smart Academic Pathway Planner")
 st.markdown("An interactive system to organize study plans, order courses by prerequisites, and distribute them across semesters automatically.")
