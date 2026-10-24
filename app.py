@@ -1,7 +1,5 @@
 import streamlit as st
 import networkx as nx
-from pyvis.network import Network
-import streamlit.components.v1 as components
 
 # Page configuration and layout setup
 st.set_page_config(
@@ -170,52 +168,21 @@ with col2:
     elif error:
         st.error("⚠️ Cannot render map due to circular dependencies.")
     else:
-        net = Network(height="450px", width="100%", directed=True, bgcolor="#ffffff", font_color="#000000")
-        
+        # Build clean Graphviz DOT format natively
+        dot_code = "digraph {\n"
+        dot_code += "  rankdir=UD;\n"
+        dot_code += '  node [shape=box, style="filled,rounded", fillcolor="#4A90E2", fontname="sans-serif", fontcolor="white", margin=0.3, fontsize=14];\n'
+        dot_code += '  edge [color="#7F8C8D", penwidth=2];\n'
         for node in G.nodes():
-            net.add_node(
-                node, 
-                label=node, 
-                title=node, 
-                color={"background": "#4A90E2", "border": "#2C3E50"},
-                size=30, 
-                font={"size": 18, "color": "#000000", "face": "Tahoma", "vadjust": -35}
-            )
-            
-        for edge in G.edges():
-            net.add_edge(edge[0], edge[1], color="#7F8C8D", width=2, arrows="to")
-            
-        net.set_options("""
-        {
-          "layout": {
-            "hierarchical": {
-              "enabled": true,
-              "direction": "UD",
-              "sortMethod": "directed",
-              "nodeSpacing": 150,
-              "levelSeparation": 150
-            }
-          },
-          "physics": {
-            "hierarchicalRepulsion": {
-              "centralGravity": 0.0,
-              "springLength": 100,
-              "springConstant": 0.01,
-              "nodeDistance": 120,
-              "damping": 0.09
-            }
-          }
-        }
-        """)
+            safe_node = node.replace('"', '\\"')
+            dot_code += f'  "{safe_node}";\n'
+        for u, v in G.edges():
+            safe_u = u.replace('"', '\\"')
+            safe_v = v.replace('"', '\\"')
+            dot_code += f'  "{safe_u}" -> "{safe_v}";\n'
+        dot_code += "}\n"
         
-        try:
-            path = "tmp_graph.html"
-            net.save_graph(path)
-            with open(path, 'r', encoding='utf-8') as f:
-                html_data = f.read()
-            components.html(html_data, height=480)
-        except Exception as e:
-            st.error(f"Error rendering network: {e}")
+        st.graphviz_chart(dot_code, use_container_width=True)
 
 st.markdown("---")
 st.subheader("🚀 Automatic Scheduling")
