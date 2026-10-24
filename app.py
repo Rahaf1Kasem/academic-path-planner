@@ -10,18 +10,15 @@ st.set_page_config(
     layout="wide"
 )
 
+# Robust CSS to ensure header and sidebar toggle button are always visible on Render
 st.markdown("""
 <style>
+header {visibility: visible !important;}
+[data-testid="stHeader"] {display: block !important; background: transparent !important;}
 [data-testid="collapsedControl"] {
     display: block !important;
     visibility: visible !important;
-    position: fixed !important;
-    top: 15px !important;
-    left: 15px !important;
     z-index: 999999 !important;
-    background-color: #f0f2f6 !important;
-    border-radius: 50% !important;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2) !important;
 }
 </style>
 """, unsafe_allow_html=True)
