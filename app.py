@@ -13,8 +13,9 @@ st.set_page_config(
 # Custom CSS to hide GitHub icon and link
 hide_github_style = """
 <style>
-.stAppToolbar, [data-testid="stStatusWidget"], header [data-testid="baseButton-header"], a[href*="github.com"] {
+a[href*="github.com"] {
     display: none !important;
+}
 }
 </style>
 """
