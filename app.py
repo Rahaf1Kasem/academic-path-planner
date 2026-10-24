@@ -11,7 +11,6 @@ st.set_page_config(
 )
 
 
-st.markdown(hide_github_style, unsafe_allow_html=True)
 
 st.title("🎓 Smart Academic Pathway Planner")
 st.markdown("An interactive system to organize study plans, order courses by prerequisites, and distribute them across semesters automatically.")
